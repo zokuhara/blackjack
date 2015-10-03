@@ -1,8 +1,18 @@
 language: ruby
 rvm:
-  - 2.2.3
+- 2.2.3
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - cp config/database.yml.travis config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
+- cp config/database.yml.travis config/database.yml
+deploy:
+  provider: heroku
+  api_key:
+    secure: JVOqDiWD7gfotWsUuJAqqhA58Pscz0+jUHYXbiOS+Pftw8jqGcOTrZn2Ec2bzZlIhoHOWsGLAvBxfarPcXw5k2hDE6VIOX0XJa0kgMUGFTaTLDEku8Rg+d65VyKuneCV/ryw+H2sQ+gkuD/bfxiWlVdBdGDvKYYDEz2qCCLz4gknd0hsn90am1pq+15n/LPd9p2e48kqjTTHno9ZgfTSsutnsnVVNFsQZVJ42jYK79JcciLvstbEsK/RSamR2lWLFC65o4CX0Ma/qYNp+A5y6orvNY/0g4/zmKJd/oMVItBiBKkdpuYE0Dlx2y9YOkOVx0WZL62rALbASa0mg2YuBCdmOE88wMUhLCPZL1PYkX3al1SgwQVayZ96kMFr/FAYTjFcVj7wkcmp/aE6GvldySI2PXKA4I4WC+C2m7ApUR+5yJowhtR9sEYjuxFWeP8nrerj4po/pUZgNRQIGaUSU0IYQ6Lpe9zHR0h+dhPmxYgTiSAFliZJzwdKAoIaPFAom6dvH1KOCpW7BcV9kNRS0nku3VdsrfB0yNaDFDCJVWgFMg5kePNof69AIkpX8ibuS0qd+2v6hLlVZfiViUiukmrTCGjn+e19NK2mMNPbTR1L196ydb2fA9dFxjoDiRshI60EEBfomTTMH2FA/PpMPUeZAMnRVaTysvjvV74tpnE=
+  app: secret-ridge-6062
+  on:
+    repo: zokuhara/blackjack
+    run:
+    - "rake db:migrate"
+    - "rake cleanup"
