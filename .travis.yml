@@ -13,6 +13,6 @@ deploy:
   app: secret-ridge-6062
   on:
     repo: zokuhara/blackjack
-    run:
-    - "rake db:migrate"
-    - "rake cleanup"
+  run:
+  - "rake db:migrate"
+  - "rake cleanup"
