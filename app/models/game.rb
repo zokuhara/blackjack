@@ -2,8 +2,12 @@ class Game < ActiveRecord::Base
   has_many :hands
   has_many :cards
 
-  def player_wins?
-    player_hand.total > dealer_hand.total
+  def game_outcome
+    if player_hand.total > dealer_hand.total
+      "Player Wins!"
+    else
+      "Dealer Wins!"
+    end
   end
 
   def dealer_turn

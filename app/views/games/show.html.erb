@@ -1,12 +1,11 @@
 <div class="well">
 
-  <!-- <% if @game.player_hand.total > 21 %>
-    You Busted!
-  <% elsif @game.player_wins? %>
-    You Win!
-  <% else %>
-    Dealer Wins
-  <% end %> -->
+  <!-- display outcome -->
+  <% if @game.player_hand.is_finished &&  @game.dealer_hand.is_finished %>
+
+    <h3><%= @game.game_outcome %><h3>
+      <%= link_to 'Play Again?', games_path, method: :post, class: "btn btn-success" %>
+  <% end %>
 </div>
 
 <h2>Dealer Hand</h2>
@@ -30,9 +29,8 @@
   <br/>
   <span>
     Player Total: <%= @game.player_hand.total %><br/>
-    <%= @game.player_hand.is_finished %>
   </span>
   <br/>
-  <%= link_to "Stay", end_player_turn_game_path(id: @game.id), method: :patch, class: "btn btn-danger btn-lrg btn-block" %>
+  <%= link_to "Stay", end_player_turn_path(id: @game.id), method: :patch, class: "btn btn-danger btn-lrg btn-block" %>
 
 </div>

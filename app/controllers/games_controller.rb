@@ -6,7 +6,7 @@ class GamesController < ApplicationController
     @game = Game.find params[:id]
     #if player_hand.is_finished   && !dealer_hand is finished ? _dealer_response(game)
     if @game.player_hand.is_finished && !@game.dealer_hand.is_finished
-      game._dealer_response(game)
+      _dealer_response(@game)
     end
 
     #if dealer_hand.is_finished ... game.evaluate_score_to_determine_winner # ->returns  "«winner»"
@@ -40,7 +40,7 @@ class GamesController < ApplicationController
       g.dealer_hand.cards << g.deck.first
     else
       #dealer stays
-      g.dealer_hand.is_finished = true
+      g.dealer_hand.update_attributes(is_finished: true)
     end
 
     g.save
@@ -53,9 +53,7 @@ class GamesController < ApplicationController
 
     #query for the game from database w/ Game.find_by
     @game = Game.find params[:id]
-    @game.player_hand.is_finished = true
-    #save @game
-    #redirect to game_path with @game's :id
+    @game.player_hand.update_attributes(is_finished: true)
 
     @game.save
     redirect_to game_path(id: @game.id)
