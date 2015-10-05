@@ -6,6 +6,20 @@ class Game < ActiveRecord::Base
     player_hand.total > dealer_hand.total
   end
 
+  def dealer_turn
+    #if dealer has blackjack, dealer automatically wins(hard mode)
+    if @game.player_hand.is_finished
+      if dealer_hand.total <= 16
+        # dealer hits
+        redirect_to dealer_hit_game_path(id: @game.id)
+      else
+        #dealer stays
+      end
+    end
+
+  end
+
+
   def build_cards
     card_order = (1..52).to_a.shuffle
 

@@ -1,25 +1,38 @@
+<div class="well">
+
+  <!-- <% if @game.player_hand.total > 21 %>
+    You Busted!
+  <% elsif @game.player_wins? %>
+    You Win!
+  <% else %>
+    Dealer Wins
+  <% end %> -->
+</div>
+
 <h2>Dealer Hand</h2>
 
 <div class="row">
-  <div class="thumbnail col-md-3 col-md-offset-2">
-    Dealer Card 1
-  </div>
-  <div class="thumbnail col-md-3">
-    Dealer Card 2
-  </div>
+  <% @game.dealer_hand.cards.each do |card| %>
+    <%= image_tag "#{card.name}#{card.suit}.png" %>
+  <% end %>
 </div>
+<%= @game.dealer_hand.total %>
 
 <h2>Player Hand</h2>
 
 <div class="row">
-  <div class="thumbnail col-md-3 col-md-offset-2">
-    Player Card 1
-  </div>
-  <div class="thumbnail col-md-3">
-    Player Card 2
-  </div>
-  <div class="thumbnail col-md-2">
-    <button class="btn btn-success btn-lrg btn-block" name="hit">Hit</button><br/>
-    <button class="btn btn-danger btn-lrg btn-block" name="stay">Stay</button>
-  </div>
+  <% @game.player_hand.cards.each do |card| %>
+    <%= image_tag "#{card.name}#{card.suit}.png" %>
+  <% end %>
+</div>
+<div class="thumbnail col-md-2">
+  <%= link_to "Hit", player_hit_game_path(id: @game.id), method: :post, class: "btn btn-success btn-lrg btn-block" %>
+  <br/>
+  <span>
+    Player Total: <%= @game.player_hand.total %><br/>
+    <%= @game.player_hand.is_finished %>
+  </span>
+  <br/>
+  <%= link_to "Stay", end_player_turn_game_path(id: @game.id), method: :patch, class: "btn btn-danger btn-lrg btn-block" %>
+
 </div>
