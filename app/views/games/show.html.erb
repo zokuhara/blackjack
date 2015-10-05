@@ -1,7 +1,7 @@
 <div class="well">
 
   <!-- display outcome -->
-  <% if @game.player_hand.is_finished &&  @game.dealer_hand.is_finished %>
+  <% if (@game.player_hand.is_finished) &&  (@game.dealer_hand.is_finished) %>
 
     <h3><%= @game.game_outcome %><h3>
       <%= link_to 'Play Again?', games_path, method: :post, class: "btn btn-success" %>
@@ -11,11 +11,18 @@
 <h2>Dealer Hand</h2>
 
 <div class="row">
-  <% @game.dealer_hand.cards.each do |card| %>
-    <%= image_tag "#{card.name}#{card.suit}.png" %>
+  <% if @game.player_hand.is_finished %>
+    <% @game.dealer_hand.cards.each do |card| %>
+      <%= image_tag "#{card.name}#{card.suit}.png" %>
+    <% end %>
+  <% else %>
+    <!-- Show one card face down, the other face up -->
+    <!-- <%= image_tag "card-back.png", width: "220px" %> -->
+    <% @game.dealer_hand.cards.each do |card| %>
+      <%= image_tag "#{card.name}#{card.suit}.png" %>
+    <% end %>
   <% end %>
 </div>
-<%= @game.dealer_hand.total %>
 
 <h2>Player Hand</h2>
 

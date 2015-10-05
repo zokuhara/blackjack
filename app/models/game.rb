@@ -3,7 +3,9 @@ class Game < ActiveRecord::Base
   has_many :cards
 
   def game_outcome
-    if player_hand.total > dealer_hand.total
+    if 21 < dealer_hand.total
+      "Dealer Busts! Player Wins!"
+    elsif player_hand.total > dealer_hand.total
       "Player Wins!"
     else
       "Dealer Wins!"
